@@ -18,6 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Calculate version
+        id: calculate_version
         run: |
           NEW_VERSION=$(git tag | grep frontend/v | sed -e "s/^frontend\/v/1 + /" | bc)
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
@@ -28,6 +29,6 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/${{ steps.version.outputs.new_version }}',
+              ref: 'refs/tags/${{ steps.calculate_version.outputs.new_version }}',
               sha: context.sha
             })
