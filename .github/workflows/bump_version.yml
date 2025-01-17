@@ -1,0 +1,21 @@
+name: Bump version
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        id: tag_version
+        uses: miguelfito/github-bump-and-tag-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_prefix: "frontend/v"
