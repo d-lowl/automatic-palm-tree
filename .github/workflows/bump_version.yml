@@ -17,10 +17,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Calculate version
         id: calculate_version
         run: |
-          echo $(git tag)
+          echo $(git status)
           NEW_VERSION=$(git tag | grep frontend/v | sed -e "s/^frontend\/v/1 + /" | bc)
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
       - name: Display all outputs as JSON
