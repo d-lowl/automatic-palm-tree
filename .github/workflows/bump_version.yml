@@ -1,5 +1,8 @@
 name: Bump version
 on:
+  push: 
+    branches: 
+      - master
   pull_request:
     types:
       - closed
@@ -14,10 +17,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name:  'Automated Version Bump'
-        uses:  'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create tag
+        uses: actions/github-script@v5
         with:
-          tag-prefix:  'v'
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/v0.1.1',
+              sha: context.sha
+            })
