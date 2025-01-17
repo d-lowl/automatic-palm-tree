@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Calculate version
         run: |
-          NEW_VERSION=git tag | grep frontend/v | sed -e "s/^frontend\/v/1 + /" | bc
+          NEW_VERSION=$(git tag | grep frontend/v | sed -e "s/^frontend\/v/1 + /" | bc)
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
       - name: Create tag
         uses: actions/github-script@v5
