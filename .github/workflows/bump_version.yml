@@ -22,6 +22,10 @@ jobs:
         run: |
           NEW_VERSION=$(git tag | grep frontend/v | sed -e "s/^frontend\/v/1 + /" | bc)
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+      - name: Display all outputs as JSON
+        run: |
+          echo "${{ toJSON(steps.calculate_version.outputs) }}"
+
       - name: Create tag
         uses: actions/github-script@v5
         with:
