@@ -15,8 +15,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Bump version and push tag
-        id: tag_version
-        uses: miguelfito/github-bump-and-tag-action@v1
+      - name:  'Automated Version Bump'
+        uses:  'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag-prefix:  'v'
